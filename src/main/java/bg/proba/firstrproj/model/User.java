@@ -1,5 +1,6 @@
 package bg.proba.firstrproj.model;
 
+import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
@@ -28,6 +29,7 @@ public class User implements UserDetails {
   @Size(max = 1024)
   private String password;
 
+  private OffsetDateTime lastLoginTime;
 
   public long getId() {
     return id;
@@ -38,8 +40,33 @@ public class User implements UserDetails {
     return this;
   }
 
+  @Override
   public String getUsername() {
     return username;
+  }
+
+  public User setUsername(String username) {
+    this.username = username;
+    return this;
+  }
+
+  @Override
+  public String getPassword() {
+    return password;
+  }
+
+  public User setPassword(String password) {
+    this.password = password;
+    return this;
+  }
+
+  public OffsetDateTime getLastLoginTime() {
+    return lastLoginTime;
+  }
+
+  public User setLastLoginTime(OffsetDateTime lastLoginTime) {
+    this.lastLoginTime = lastLoginTime;
+    return this;
   }
 
   @Override
@@ -62,23 +89,9 @@ public class User implements UserDetails {
     return true;
   }
 
-  public User setUsername(String username) {
-    this.username = username;
-    return this;
-  }
-
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return Arrays.asList(new SimpleGrantedAuthority("user"));
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public User setPassword(String password) {
-    this.password = password;
-    return this;
   }
 
   @Override
