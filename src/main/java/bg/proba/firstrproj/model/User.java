@@ -30,6 +30,7 @@ public class User implements UserDetails {
   private String password;
 
   private OffsetDateTime lastLoginTime;
+  private OffsetDateTime registrationTime;
 
   public long getId() {
     return id;
@@ -66,6 +67,15 @@ public class User implements UserDetails {
 
   public User setLastLoginTime(OffsetDateTime lastLoginTime) {
     this.lastLoginTime = lastLoginTime;
+    return this;
+  }
+
+  public OffsetDateTime getRegistrationTime() {
+    return registrationTime;
+  }
+
+  public User setRegistrationTime(OffsetDateTime registrationTime) {
+    this.registrationTime = registrationTime;
     return this;
   }
 

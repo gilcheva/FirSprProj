@@ -2,6 +2,8 @@ package bg.proba.firstrproj.service;
 
 import bg.proba.firstrproj.model.User;
 import bg.proba.firstrproj.repository.UserRepository;
+import java.time.OffsetDateTime;
+import java.util.Optional;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -29,8 +31,16 @@ public class UserService implements UserDetailsService {
       user.setUsername("admin");
       user.setPassword(passwordEncoder.encode("admin"));
       userRepository.save(user);
+      user.setRegistrationTime(OffsetDateTime.now());
     }
-    return userRepository.findByUsername(username)
-        .orElseThrow(() -> new UsernameNotFoundException("Not Found."));
+
+    Optional<User> user = userRepository.findByUsername(username);
+    if (!user.isPresent()) {
+      throw new UsernameNotFoundException("Not Found.");
+    }
+
+    User realUser = user.get();
+    realUser.setLastLoginTime(OffsetDateTime.now());
+    return userRepository.save(realUser);
   }
 }
